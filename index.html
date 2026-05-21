@@ -8,16 +8,15 @@
 
   <style>
     :root{
-      /* Luxury palette: soft yellow + deep navy */
-      --bg: #fbf7ea;           /* very light warm yellow */
-      --surface: #ffffff;      /* card surface */
-      --surface-2: #fffaf0;    /* subtle warm surface */
-      --text: #132238;         /* deep navy-ish text */
-      --muted: #4b5a70;        /* muted navy */
-      --navy: #0b1f3a;         /* deep navy */
-      --navy-2:#123a6b;        /* secondary navy */
-      --accent: #d4a017;       /* refined gold/yellow accent */
-      --accent-2:#b88912;      /* hover gold */
+      --bg: #fbf7ea;
+      --surface: #ffffff;
+      --surface-2: #fffaf0;
+      --text: #132238;
+      --muted: #4b5a70;
+      --navy: #0b1f3a;
+      --navy-2:#123a6b;
+      --accent: #d4a017;
+      --accent-2:#b88912;
       --border: rgba(11,31,58,0.12);
       --shadow: 0 10px 30px rgba(11,31,58,0.12);
       --shadow-soft: 0 6px 16px rgba(11,31,58,0.10);
@@ -57,11 +56,7 @@
       gap: 18px;
     }
 
-    .nav-container h2{
-      margin: 0;
-      letter-spacing: 0.3px;
-      font-weight: 750;
-    }
+    .nav-container h2{ margin: 0; letter-spacing: 0.3px; font-weight: 750; }
 
     nav a {
       color: rgba(255,255,255,0.92);
@@ -76,21 +71,15 @@
     nav a::after{
       content:"";
       position:absolute;
-      left:0;
-      bottom:0;
-      width:0%;
-      height:2px;
+      left:0; bottom:0;
+      width:0%; height:2px;
       background: linear-gradient(90deg, var(--accent), rgba(212,160,23,0));
       transition: width 220ms ease;
     }
 
     nav a:hover { color: #fff; }
     nav a:hover::after{ width:100%; }
-
-    nav a:focus-visible{
-      border-radius: 6px;
-      box-shadow: var(--ring);
-    }
+    nav a:focus-visible{ border-radius: 6px; box-shadow: var(--ring); }
 
     .hero {
       background:
@@ -152,9 +141,238 @@
 
     .about p { max-width: 840px; color: var(--muted); }
 
+    /* =============================================
+       ANIMAL FILTER SYSTEM
+    ============================================= */
+
+    .filter-shell {
+      background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow-soft);
+      padding: 24px 28px;
+      margin-bottom: 32px;
+    }
+
+    .filter-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .filter-top-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .filter-top-left h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--navy);
+      letter-spacing: 0.1px;
+    }
+
+    .filter-result-count {
+      font-size: 0.88rem;
+      font-weight: 750;
+      color: var(--muted);
+      background: rgba(11,31,58,0.06);
+      border: 1px solid var(--border);
+      padding: 5px 12px;
+      border-radius: 999px;
+    }
+
+    .filter-reset {
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: var(--accent-2);
+      background: rgba(212,160,23,0.10);
+      border: 1px solid rgba(212,160,23,0.28);
+      padding: 7px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 160ms ease;
+    }
+
+    .filter-reset:hover {
+      background: rgba(212,160,23,0.18);
+      border-color: rgba(212,160,23,0.45);
+      transform: translateY(-1px);
+    }
+
+    .filter-reset:focus-visible { outline: none; box-shadow: var(--ring); }
+
+    /* Filter groups */
+    .filter-groups {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .filter-group {}
+
+    .filter-group-label {
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(75,90,112,0.75);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-group-label .filter-icon {
+      font-size: 0.9rem;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      font-weight: 750;
+      border: 1.5px solid rgba(11,31,58,0.16);
+      background: #fff;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 160ms ease;
+      box-shadow: 0 3px 8px rgba(11,31,58,0.07);
+      user-select: none;
+    }
+
+    .chip:hover {
+      border-color: rgba(11,31,58,0.28);
+      color: var(--navy);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(11,31,58,0.11);
+    }
+
+    .chip.active {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+      border-color: transparent;
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(11,31,58,0.22);
+    }
+
+    .chip.active:hover {
+      filter: brightness(1.1);
+    }
+
+    .chip .chip-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
+
+    /* Range slider for age */
+    .age-range-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .age-range-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .age-range-labels span {
+      background: rgba(212,160,23,0.12);
+      border: 1px solid rgba(212,160,23,0.28);
+      color: var(--navy);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.83rem;
+      font-weight: 900;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 5px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent) var(--pct, 50%), rgba(11,31,58,0.12) var(--pct, 50%));
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #e2b22f);
+      border: 2px solid #fff;
+      box-shadow: 0 4px 12px rgba(11,31,58,0.2);
+      transition: transform 140ms ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+
+    /* Active filter tags row */
+    .active-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      min-height: 0;
+    }
+
+    .active-filters:empty { display: none; }
+
+    .active-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, rgba(212,160,23,0.14), rgba(212,160,23,0.08));
+      border: 1px solid rgba(212,160,23,0.38);
+      color: #7a5800;
+      font-size: 0.83rem;
+      font-weight: 800;
+      padding: 5px 10px;
+      border-radius: 999px;
+    }
+
+    .active-tag .remove-tag {
+      cursor: pointer;
+      opacity: 0.65;
+      font-size: 0.9rem;
+      line-height: 1;
+      transition: opacity 120ms;
+    }
+
+    .active-tag .remove-tag:hover { opacity: 1; }
+
+    /* =============================================
+       ANIMAL CARDS
+    ============================================= */
+
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 22px;
     }
 
@@ -165,13 +383,17 @@
       box-shadow: var(--shadow-soft);
       border: 1px solid var(--border);
       transform: translateY(0);
-      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, opacity 260ms ease;
     }
 
     .card:hover{
       transform: translateY(-4px);
       box-shadow: var(--shadow);
       border-color: rgba(11,31,58,0.18);
+    }
+
+    .card.hidden {
+      display: none;
     }
 
     .card img {
@@ -182,14 +404,47 @@
     }
 
     .card .content { padding: 18px 18px 20px; }
-    .card h3 { margin: 6px 0 10px; color: var(--navy); letter-spacing: 0.2px; }
-    .card p{ margin: 0; color: var(--muted); }
+    .card h3 { margin: 6px 0 8px; color: var(--navy); letter-spacing: 0.2px; }
+    .card p{ margin: 0 0 12px; color: var(--muted); line-height: 1.65; }
 
-    .adoption-steps li { margin-bottom: 10px; color: var(--muted); }
-  </style>
+    /* Card badges */
+    .card-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
 
-  <style>
-    /* ---- Smart Calendar (high-quality, human-friendly UI) ---- */
+    .badge-tag {
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+    }
+
+    .badge-tag.gender-male   { background: rgba(18,58,107,0.10); color: #0d3470; border: 1px solid rgba(18,58,107,0.18); }
+    .badge-tag.gender-female { background: rgba(180,40,110,0.09); color: #a0205e; border: 1px solid rgba(180,40,110,0.18); }
+    .badge-tag.neutered      { background: rgba(20,140,80,0.10); color: #0e6a3b; border: 1px solid rgba(20,140,80,0.20); }
+    .badge-tag.not-neutered  { background: rgba(200,80,20,0.09); color: #8c3a0a; border: 1px solid rgba(200,80,20,0.18); }
+    .badge-tag.species       { background: rgba(212,160,23,0.12); color: #7a5800; border: 1px solid rgba(212,160,23,0.28); }
+
+    /* Empty state */
+    .no-results {
+      display: none;
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+
+    .no-results .no-icon { font-size: 3rem; margin-bottom: 12px; }
+    .no-results h4 { margin: 0 0 6px; color: var(--navy); font-size: 1.1rem; }
+    .no-results p  { margin: 0; font-size: 0.95rem; }
+
+    /* =============================================
+       CALENDAR STYLES
+    ============================================= */
     .calendar-shell{
       display: grid;
       grid-template-columns: 1.05fr 0.95fr;
@@ -197,9 +452,7 @@
       align-items: start;
     }
 
-    @media (max-width: 980px){
-      .calendar-shell{ grid-template-columns: 1fr; }
-    }
+    @media (max-width: 980px){ .calendar-shell{ grid-template-columns: 1fr; } }
 
     .panel{
       background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
@@ -335,10 +588,7 @@
 
     .day:focus-visible{ outline: none; box-shadow: var(--ring); }
 
-    .day.muted{
-      opacity: 0.45;
-      background: rgba(255,255,255,0.6);
-    }
+    .day.muted{ opacity: 0.45; background: rgba(255,255,255,0.6); }
 
     .day.selected{
       border-color: rgba(212,160,23,0.60);
@@ -346,17 +596,11 @@
       background: linear-gradient(180deg, #fff 0%, rgba(212,160,23,0.06) 100%);
     }
 
-    .day .num{
-      font-weight: 950;
-      color: var(--navy);
-      letter-spacing: 0.2px;
-      font-size: 0.95rem;
-    }
+    .day .num{ font-weight: 950; color: var(--navy); letter-spacing: 0.2px; font-size: 0.95rem; }
 
     .day .badge{
       position: absolute;
-      right: 10px;
-      top: 10px;
+      right: 10px; top: 10px;
       font-size: 0.76rem;
       font-weight: 900;
       color: #0b1f3a;
@@ -366,11 +610,7 @@
       border-radius: 999px;
     }
 
-    .hint{
-      margin: 12px 0 0;
-      color: rgba(75,90,112,0.90);
-      font-size: 0.95rem;
-    }
+    .hint{ margin: 12px 0 0; color: rgba(75,90,112,0.90); font-size: 0.95rem; }
 
     .form-row{
       display: grid;
@@ -379,9 +619,7 @@
       margin-bottom: 12px;
     }
 
-    @media (max-width: 520px){
-      .form-row{ grid-template-columns: 1fr; }
-    }
+    @media (max-width: 520px){ .form-row{ grid-template-columns: 1fr; } }
 
     label{
       display: block;
@@ -404,11 +642,7 @@
       transition: box-shadow 140ms ease, border-color 140ms ease, transform 140ms ease;
     }
 
-    textarea{
-      min-height: 120px;
-      resize: vertical;
-      line-height: 1.55;
-    }
+    textarea{ min-height: 120px; resize: vertical; line-height: 1.55; }
 
     select:focus, input[type="text"]:focus, input[type="number"]:focus, textarea:focus{
       outline: none;
@@ -452,23 +686,11 @@
       color: rgba(156, 22, 22, 0.92);
     }
 
-    .meta{
-      font-size: 0.92rem;
-      color: rgba(75,90,112,0.95);
-      margin: 6px 0 0;
-    }
+    .meta{ font-size: 0.92rem; color: rgba(75,90,112,0.95); margin: 6px 0 0; }
 
-    .divider{
-      height: 1px;
-      background: rgba(11,31,58,0.10);
-      margin: 16px 0;
-    }
+    .divider{ height: 1px; background: rgba(11,31,58,0.10); margin: 16px 0; }
 
-    .comment-list{
-      display: grid;
-      gap: 10px;
-      margin-top: 10px;
-    }
+    .comment-list{ display: grid; gap: 10px; margin-top: 10px; }
 
     .comment-item{
       border: 1px solid rgba(11,31,58,0.12);
@@ -486,25 +708,9 @@
       justify-content: space-between;
     }
 
-    .comment-title{
-      margin: 0;
-      font-weight: 950;
-      color: var(--navy);
-      letter-spacing: 0.2px;
-      font-size: 1.02rem;
-    }
-
-    .comment-time{
-      font-size: 0.82rem;
-      color: rgba(75,90,112,0.90);
-      font-weight: 750;
-    }
-
-    .comment-text{
-      margin: 8px 0 0;
-      color: rgba(75,90,112,0.98);
-      white-space: pre-wrap;
-    }
+    .comment-title{ margin: 0; font-weight: 950; color: var(--navy); letter-spacing: 0.2px; font-size: 1.02rem; }
+    .comment-time{ font-size: 0.82rem; color: rgba(75,90,112,0.90); font-weight: 750; }
+    .comment-text{ margin: 8px 0 0; color: rgba(75,90,112,0.98); white-space: pre-wrap; }
 
     .comment-controls{
       display: flex;
@@ -514,25 +720,10 @@
       justify-content: flex-end;
     }
 
-    .status{
-      font-size: 0.92rem;
-      color: rgba(75,90,112,0.95);
-      margin: 8px 0 0;
-    }
+    .status{ font-size: 0.92rem; color: rgba(75,90,112,0.95); margin: 8px 0 0; }
+    .sr-only{ position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
-    .sr-only{
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0,0,0,0);
-      white-space: nowrap;
-      border: 0;
-    }
-
-    /* ---- Contact formatting upgrade ---- */
+    /* Contact */
     .contact-grid{
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -540,9 +731,7 @@
       margin-top: 16px;
     }
 
-    @media (max-width: 780px){
-      .contact-grid{ grid-template-columns: 1fr; }
-    }
+    @media (max-width: 780px){ .contact-grid{ grid-template-columns: 1fr; } }
 
     .contact-card{
       background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
@@ -585,14 +774,8 @@
       padding-bottom: 2px;
     }
 
-    .contact-link:hover{
-      border-bottom-color: rgba(212,160,23,0.7);
-    }
-
-    .contact-value{
-      font-weight: 800;
-      color: rgba(19,34,56,0.92);
-    }
+    .contact-link:hover{ border-bottom-color: rgba(212,160,23,0.7); }
+    .contact-value{ font-weight: 800; color: rgba(19,34,56,0.92); }
 
     footer {
       background: linear-gradient(135deg, #071427 0%, var(--navy) 100%);
@@ -601,6 +784,17 @@
       padding: 30px 20px;
       font-size: 0.9rem;
       border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .-steps li { margin-bottom: 10px; color: var(--muted); }
+
+    @media (max-width: 680px) {
+      .filter-groups { grid-template-columns: 1fr 1fr; }
+      .filter-shell { padding: 18px 16px; }
+    }
+
+    @media (max-width: 420px) {
+      .filter-groups { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -614,7 +808,7 @@
         <a href="#about">About Us</a>
         <a href="#calendar">Smart Calendar</a>
         <a href="#animals">Animals</a>
-        <a href="#adoption">Adoption</a>
+        <a href="#About adoption">Adoption</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
@@ -636,12 +830,11 @@
     </p>
   </section>
 
-  <!-- ✅ Smart Calendar Section -->
+  <!-- Smart Calendar Section -->
   <section id="calendar" class="container">
     <h2 class="section-title">Smart Calendar</h2>
 
     <div class="calendar-shell">
-      <!-- Left: Calendar -->
       <div class="panel" aria-label="Calendar panel">
         <div class="panel-header">
           <h3>
@@ -669,16 +862,13 @@
           <div class="calendar-grid" aria-hidden="true">
             <div class="dow">Sun</div><div class="dow">Mon</div><div class="dow">Tue</div><div class="dow">Wed</div><div class="dow">Thu</div><div class="dow">Fri</div><div class="dow">Sat</div>
           </div>
-
           <div class="calendar-grid" id="calendarGrid" role="grid" aria-label="Monthly calendar"></div>
-
           <p class="hint" id="calendarHint">
             Pick a date, choose an animal, then write notes. Everything saves locally in this browser.
           </p>
         </div>
       </div>
 
-      <!-- Right: Comment editor + list -->
       <div class="panel" aria-label="Comments panel">
         <div class="panel-header">
           <h3>
@@ -699,6 +889,9 @@
                   <option value="Luna">Luna</option>
                   <option value="Max">Max</option>
                   <option value="Bella">Bella</option>
+                  <option value="Charlie">Charlie</option>
+                  <option value="Mochi">Mochi</option>
+                  <option value="Coco">Coco</option>
                 </select>
               </div>
               <div>
@@ -731,6 +924,9 @@
                 <option value="Luna">Luna</option>
                 <option value="Max">Max</option>
                 <option value="Bella">Bella</option>
+                <option value="Charlie">Charlie</option>
+                <option value="Mochi">Mochi</option>
+                <option value="Coco">Coco</option>
               </select>
             </div>
             <div>
@@ -749,36 +945,205 @@
     </div>
   </section>
 
+  <!-- ✅ Animals Section with FILTER -->
   <section id="animals" class="container">
     <h2 class="section-title">Animals Currently in Our Care</h2>
-    <div class="cards">
-      <div class="card">
+
+    <!-- ===================== FILTER UI ===================== -->
+    <div class="filter-shell" id="filterShell">
+
+      <div class="filter-top">
+        <div class="filter-top-left">
+          <h3>🔍 필터 검색</h3>
+          <span class="filter-result-count" id="filterResultCount">6마리 표시 중</span>
+        </div>
+        <button class="filter-reset" type="button" id="filterResetBtn">✕ 필터 초기화</button>
+      </div>
+
+      <div class="filter-groups">
+
+        <!-- 종 -->
+        <div class="filter-group">
+          <div class="filter-group-label"><span class="filter-icon">🐾</span> 종류</div>
+          <div class="chip-row" id="chipSpecies">
+            <button class="chip active" data-filter="species" data-value="ALL" type="button">전체</button>
+            <button class="chip" data-filter="species" data-value="cat" type="button">🐱 고양이</button>
+            <button class="chip" data-filter="species" data-value="dog" type="button">🐶 강아지</button>
+          </div>
+        </div>
+
+        <!-- 성별 -->
+        <div class="filter-group">
+          <div class="filter-group-label"><span class="filter-icon">⚥</span> 성별</div>
+          <div class="chip-row" id="chipGender">
+            <button class="chip active" data-filter="gender" data-value="ALL" type="button">전체</button>
+            <button class="chip" data-filter="gender" data-value="male" type="button">♂ 수컷</button>
+            <button class="chip" data-filter="gender" data-value="female" type="button">♀ 암컷</button>
+          </div>
+        </div>
+
+        <!-- 중성화 -->
+        <div class="filter-group">
+          <div class="filter-group-label"><span class="filter-icon">💉</span> 중성화</div>
+          <div class="chip-row" id="chipNeutered">
+            <button class="chip active" data-filter="neutered" data-value="ALL" type="button">전체</button>
+            <button class="chip" data-filter="neutered" data-value="yes" type="button">✔ 완료</button>
+            <button class="chip" data-filter="neutered" data-value="no" type="button">✘ 미완료</button>
+          </div>
+        </div>
+
+        <!-- 나이 슬라이더 -->
+        <div class="filter-group">
+          <div class="filter-group-label"><span class="filter-icon">🎂</span> 나이</div>
+          <div class="age-range-wrap">
+            <div class="age-range-labels">
+              <span id="ageMin">0세</span>
+              <span id="ageMax">10세 이하</span>
+            </div>
+            <input
+              type="range"
+              id="ageSlider"
+              min="0" max="10" value="10" step="1"
+              aria-label="최대 나이 필터"
+              style="--pct:100%"
+            />
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 활성 필터 태그 -->
+      <div class="active-filters" id="activeFilters"></div>
+    </div>
+    <!-- ==================== END FILTER UI ==================== -->
+
+    <!-- Cards -->
+    <div class="cards" id="animalCards">
+
+      <!-- Luna -->
+      <div class="card"
+           data-species="cat"
+           data-gender="female"
+           data-age="2"
+           data-neutered="yes"
+           data-name="Luna">
         <img src="https://placekitten.com/500/350" alt="Cat named Luna" />
         <div class="content">
           <h3>Luna</h3>
-          <p>Age: 2 years<br />Gender: Female<br />Breed: Domestic Shorthair</p>
+          <p>나이: 2세 · 암컷 · Domestic Shorthair</p>
+          <div class="card-badges">
+            <span class="badge-tag species">🐱 고양이</span>
+            <span class="badge-tag gender-female">♀ 암컷</span>
+            <span class="badge-tag neutered">✔ 중성화 완료</span>
+          </div>
         </div>
       </div>
 
-      <div class="card">
+      <!-- Max -->
+      <div class="card"
+           data-species="dog"
+           data-gender="male"
+           data-age="3"
+           data-neutered="no"
+           data-name="Max">
         <img src="https://placedog.net/500/350" alt="Dog named Max" />
         <div class="content">
           <h3>Max</h3>
-          <p>Age: 3 years<br />Gender: Male<br />Breed: Mixed</p>
+          <p>나이: 3세 · 수컷 · Mixed</p>
+          <div class="card-badges">
+            <span class="badge-tag species">🐶 강아지</span>
+            <span class="badge-tag gender-male">♂ 수컷</span>
+            <span class="badge-tag not-neutered">✘ 중성화 미완료</span>
+          </div>
         </div>
       </div>
 
-      <div class="card">
+      <!-- Bella -->
+      <div class="card"
+           data-species="dog"
+           data-gender="female"
+           data-age="1"
+           data-neutered="yes"
+           data-name="Bella">
         <img src="https://placedog.net/501/350" alt="Dog named Bella" />
         <div class="content">
           <h3>Bella</h3>
-          <p>Age: 1 year<br />Gender: Female<br />Breed: Labrador Mix</p>
+          <p>나이: 1세 · 암컷 · Labrador Mix</p>
+          <div class="card-badges">
+            <span class="badge-tag species">🐶 강아지</span>
+            <span class="badge-tag gender-female">♀ 암컷</span>
+            <span class="badge-tag neutered">✔ 중성화 완료</span>
+          </div>
         </div>
+      </div>
+
+      <!-- Charlie -->
+      <div class="card"
+           data-species="dog"
+           data-gender="male"
+           data-age="5"
+           data-neutered="yes"
+           data-name="Charlie">
+        <img src="https://placedog.net/502/350" alt="Dog named Charlie" />
+        <div class="content">
+          <h3>Charlie</h3>
+          <p>나이: 5세 · 수컷 · Golden Retriever</p>
+          <div class="card-badges">
+            <span class="badge-tag species">🐶 강아지</span>
+            <span class="badge-tag gender-male">♂ 수컷</span>
+            <span class="badge-tag neutered">✔ 중성화 완료</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mochi -->
+      <div class="card"
+           data-species="cat"
+           data-gender="male"
+           data-age="4"
+           data-neutered="yes"
+           data-name="Mochi">
+        <img src="https://placekitten.com/501/350" alt="Cat named Mochi" />
+        <div class="content">
+          <h3>Mochi</h3>
+          <p>나이: 4세 · 수컷 · Scottish Fold</p>
+          <div class="card-badges">
+            <span class="badge-tag species">🐱 고양이</span>
+            <span class="badge-tag gender-male">♂ 수컷</span>
+            <span class="badge-tag neutered">✔ 중성화 완료</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coco -->
+      <div class="card"
+           data-species="dog"
+           data-gender="female"
+           data-age="7"
+           data-neutered="no"
+           data-name="Coco">
+        <img src="https://placedog.net/503/350" alt="Dog named Coco" />
+        <div class="content">
+          <h3>Coco</h3>
+          <p>나이: 7세 · 암컷 · Poodle Mix</p>
+          <div class="card-badges">
+            <span class="badge-tag species">🐶 강아지</span>
+            <span class="badge-tag gender-female">♀ 암컷</span>
+            <span class="badge-tag not-neutered">✘ 중성화 미완료</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty state -->
+      <div class="no-results" id="noResults">
+        <div class="no-icon">🐾</div>
+        <h4>조건에 맞는 동물이 없어요</h4>
+        <p>필터를 조정하거나 초기화해 보세요.</p>
       </div>
     </div>
   </section>
 
-  <section id="adoption" class="container">
+  <section id="About adoption" class="container">
     <h2 class="section-title">Adoption Process</h2>
     <ol class="adoption-steps">
       <li>Browse available animals and submit an adoption application.</li>
@@ -788,21 +1153,17 @@
     </ol>
   </section>
 
-  <!-- ✅ Contact 섹션: 포맷 유지 + 값 변경 + 주소 언어 선택 -->
   <section id="contact" class="container contact-info">
     <h2 class="section-title">Contact Us</h2>
-
     <div class="contact-grid" role="list">
       <div class="contact-card" role="listitem">
         <div class="contact-label">Email</div>
         <a class="contact-link" href="mailto:pji921007@gmail.com">pji921007@gmail.com</a>
       </div>
-
       <div class="contact-card" role="listitem">
         <div class="contact-label">Phone</div>
         <a class="contact-link" href="tel:+821055125513">+82 10-5512-5513</a>
       </div>
-
       <div class="contact-card" role="listitem">
         <div class="contact-label">
           Address
@@ -820,431 +1181,317 @@
     <p>© 2026 Paws & Hope Animal Shelter. All rights reserved.</p>
   </footer>
 
-  <!-- ✅ Smart Calendar Script (single, fixed, future-friendly) -->
+  <!-- ============ SCRIPTS ============ -->
+  <script>
+  /* ============================================
+     ANIMAL FILTER LOGIC
+  ============================================ */
+  (function () {
+    const cards = Array.from(document.querySelectorAll('#animalCards .card'));
+    const noResults = document.getElementById('noResults');
+    const resultCount = document.getElementById('filterResultCount');
+    const resetBtn = document.getElementById('filterResetBtn');
+    const activeFiltersEl = document.getElementById('activeFilters');
+    const ageSlider = document.getElementById('ageSlider');
+    const ageMaxLabel = document.getElementById('ageMax');
+
+    const state = { species: 'ALL', gender: 'ALL', neutered: 'ALL', maxAge: 10 };
+
+    // chip groups
+    function setupChipGroup(groupId, filterKey) {
+      const chips = document.querySelectorAll(`#${groupId} [data-filter="${filterKey}"]`);
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          chips.forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          state[filterKey] = chip.dataset.value;
+          applyFilters();
+        });
+      });
+    }
+
+    setupChipGroup('chipSpecies', 'species');
+    setupChipGroup('chipGender', 'gender');
+    setupChipGroup('chipNeutered', 'neutered');
+
+    // age slider
+    ageSlider.addEventListener('input', () => {
+      const val = parseInt(ageSlider.value);
+      state.maxAge = val;
+      const pct = (val / 10) * 100;
+      ageSlider.style.setProperty('--pct', pct + '%');
+      ageMaxLabel.textContent = val === 10 ? '10세 이하' : `${val}세 이하`;
+      applyFilters();
+    });
+
+    function applyFilters() {
+      let visible = 0;
+      cards.forEach(card => {
+        const sp = card.dataset.species;
+        const gd = card.dataset.gender;
+        const nt = card.dataset.neutered;
+        const ag = parseInt(card.dataset.age);
+
+        const pass =
+          (state.species  === 'ALL' || state.species  === sp) &&
+          (state.gender   === 'ALL' || state.gender   === gd) &&
+          (state.neutered === 'ALL' || state.neutered === nt) &&
+          ag <= state.maxAge;
+
+        card.classList.toggle('hidden', !pass);
+        if (pass) visible++;
+      });
+
+      noResults.style.display = visible === 0 ? 'block' : 'none';
+      resultCount.textContent = `${visible}마리 표시 중`;
+      renderActiveTags();
+    }
+
+    function renderActiveTags() {
+      activeFiltersEl.innerHTML = '';
+      const labelMap = {
+        species:  { ALL: null, cat: '🐱 고양이', dog: '🐶 강아지' },
+        gender:   { ALL: null, male: '♂ 수컷', female: '♀ 암컷' },
+        neutered: { ALL: null, yes: '✔ 중성화 완료', no: '✘ 중성화 미완료' },
+      };
+
+      Object.entries(labelMap).forEach(([key, map]) => {
+        const label = map[state[key]];
+        if (!label) return;
+        const tag = document.createElement('span');
+        tag.className = 'active-tag';
+        tag.innerHTML = `${label} <span class="remove-tag" data-key="${key}" title="제거">✕</span>`;
+        tag.querySelector('.remove-tag').addEventListener('click', () => {
+          state[key] = 'ALL';
+          // reset chip visual
+          const group = { species:'chipSpecies', gender:'chipGender', neutered:'chipNeutered' }[key];
+          document.querySelectorAll(`#${group} .chip`).forEach(c => c.classList.remove('active'));
+          document.querySelector(`#${group} [data-value="ALL"]`).classList.add('active');
+          applyFilters();
+        });
+        activeFiltersEl.appendChild(tag);
+      });
+
+      if (state.maxAge < 10) {
+        const tag = document.createElement('span');
+        tag.className = 'active-tag';
+        tag.innerHTML = `🎂 ${state.maxAge}세 이하 <span class="remove-tag" data-key="maxAge" title="제거">✕</span>`;
+        tag.querySelector('.remove-tag').addEventListener('click', () => {
+          state.maxAge = 10;
+          ageSlider.value = 10;
+          ageSlider.style.setProperty('--pct', '100%');
+          ageMaxLabel.textContent = '10세 이하';
+          applyFilters();
+        });
+        activeFiltersEl.appendChild(tag);
+      }
+    }
+
+    resetBtn.addEventListener('click', () => {
+      state.species = 'ALL'; state.gender = 'ALL'; state.neutered = 'ALL'; state.maxAge = 10;
+      ageSlider.value = 10;
+      ageSlider.style.setProperty('--pct', '100%');
+      ageMaxLabel.textContent = '10세 이하';
+      ['chipSpecies','chipGender','chipNeutered'].forEach(groupId => {
+        document.querySelectorAll(`#${groupId} .chip`).forEach(c => c.classList.remove('active'));
+        document.querySelector(`#${groupId} [data-value="ALL"]`).classList.add('active');
+      });
+      applyFilters();
+    });
+
+    applyFilters();
+  })();
+  </script>
+
+  <!-- ============ CALENDAR SCRIPT ============ -->
   <script>
     (function () {
       const STORAGE_KEY = "pawsHope.calendarNotes.v1";
 
-      // --- Utilities ---
       const pad2 = (n) => String(n).padStart(2, "0");
       const toISODate = (d) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
-      const fromISODate = (iso) => {
-        const [y, m, day] = iso.split("-").map(Number);
-        return new Date(y, m - 1, day);
-      };
-
-      const formatMonthTitle = (d) =>
-        d.toLocaleDateString(undefined, { year: "numeric", month: "long" });
-
-      const formatHumanDate = (iso) =>
-        fromISODate(iso).toLocaleDateString(undefined, { weekday: "short", year: "numeric", month: "short", day: "numeric" });
-
-      const formatTime = (ms) =>
-        new Date(ms).toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
-
+      const fromISODate = (iso) => { const [y, m, day] = iso.split("-").map(Number); return new Date(y, m - 1, day); };
+      const formatMonthTitle = (d) => d.toLocaleDateString(undefined, { year: "numeric", month: "long" });
+      const formatHumanDate = (iso) => fromISODate(iso).toLocaleDateString(undefined, { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+      const formatTime = (ms) => new Date(ms).toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
       const uid = () => `note_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+      const escapeHTML = (s) => String(s).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
 
-      const escapeHTML = (s) =>
-        String(s).replace(/[&<>"']/g, (c) => ({
-          "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-        }[c]));
+      function loadNotes() { try { const raw = localStorage.getItem(STORAGE_KEY); if (!raw) return []; const parsed = JSON.parse(raw); return Array.isArray(parsed) ? parsed : []; } catch { return []; } }
+      function saveNotes(notes) { localStorage.setItem(STORAGE_KEY, JSON.stringify(notes)); }
+      function upsertNote(note) { const notes = loadNotes(); const idx = notes.findIndex(n => n.id === note.id); if (idx >= 0) notes[idx] = note; else notes.unshift(note); saveNotes(notes); }
+      function deleteNoteById(id) { saveNotes(loadNotes().filter(n => n.id !== id)); }
+      function countNotesByDate(notes) { const map = new Map(); for (const n of notes) map.set(n.dateISO, (map.get(n.dateISO) || 0) + 1); return map; }
 
-      // --- Storage ---
-      function loadNotes() {
-        try {
-          const raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) return [];
-          const parsed = JSON.parse(raw);
-          return Array.isArray(parsed) ? parsed : [];
-        } catch {
-          return [];
-        }
-      }
-
-      function saveNotes(notes) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
-      }
-
-      function upsertNote(note) {
-        const notes = loadNotes();
-        const idx = notes.findIndex(n => n.id === note.id);
-        if (idx >= 0) notes[idx] = note;
-        else notes.unshift(note);
-        saveNotes(notes);
-      }
-
-      function deleteNoteById(id) {
-        const notes = loadNotes().filter(n => n.id !== id);
-        saveNotes(notes);
-      }
-
-      function countNotesByDate(notes) {
-        const map = new Map();
-        for (const n of notes) {
-          map.set(n.dateISO, (map.get(n.dateISO) || 0) + 1);
-        }
-        return map;
-      }
-
-      // --- DOM ---
       const $ = (sel) => document.querySelector(sel);
 
       const calendarGrid = $("#calendarGrid");
       const monthTitle = $("#monthTitle");
       const selectedDatePill = $("#selectedDatePill");
-
       const prevMonthBtn = $("#prevMonth");
       const nextMonthBtn = $("#nextMonth");
       const todayBtn = $("#todayBtn");
-
       const jumpYear = $("#jumpYear");
       const jumpMonth = $("#jumpMonth");
       const jumpGo = $("#jumpGo");
-
       const noteForm = $("#noteForm");
       const animalSelect = $("#animalSelect");
       const dateInput = $("#dateInput");
       const noteText = $("#noteText");
-
       const saveBtn = $("#saveBtn");
       const clearBtn = $("#clearBtn");
       const deleteBtn = $("#deleteBtn");
-
       const commentList = $("#commentList");
       const emptyState = $("#emptyState");
       const commentCountPill = $("#commentCountPill");
-
       const filterAnimal = $("#filterAnimal");
       const filterDate = $("#filterDate");
       const searchInput = $("#searchInput");
       const draftStatus = $("#draftStatus");
       const editMeta = $("#editMeta");
 
-      // Address language toggle (Contact section)
       const addressLang = $("#addressLang");
       const addressValue = $("#addressValue");
       const ADDRESS_KO = "경기도 평택시 독곡동 289-6";
       const ADDRESS_EN = "289-6 Dokgok-dong, Pyeongtaek-si, Gyeonggi-do, South Korea";
 
-      function renderAddressLang(lang) {
-        if (!addressValue) return;
-        addressValue.textContent = (lang === "en") ? ADDRESS_EN : ADDRESS_KO;
-      }
-      if (addressLang) {
-        addressLang.addEventListener("change", () => renderAddressLang(addressLang.value));
-        renderAddressLang(addressLang.value);
-      }
+      function renderAddressLang(lang) { if (!addressValue) return; addressValue.textContent = (lang === "en") ? ADDRESS_EN : ADDRESS_KO; }
+      if (addressLang) { addressLang.addEventListener("change", () => renderAddressLang(addressLang.value)); renderAddressLang(addressLang.value); }
 
-      // --- State (future-friendly default: 2026-01) ---
-      let viewDate = new Date(2026, 0, 1);      // month being displayed (starts at 2026 Jan)
-      let selectedISO = toISODate(viewDate);     // selected day (starts at 2026-01-01)
+      let viewDate = new Date(2026, 0, 1);
+      let selectedISO = toISODate(viewDate);
       let editingNoteId = null;
 
-      // --- Calendar helpers ---
       function getMonthMatrix(date) {
-        const year = date.getFullYear();
-        const month = date.getMonth();
-
-        const first = new Date(year, month, 1);
-        const startDow = first.getDay(); // 0..6
+        const year = date.getFullYear(); const month = date.getMonth();
+        const first = new Date(year, month, 1); const startDow = first.getDay();
         const start = new Date(year, month, 1 - startDow);
-
         const days = [];
-        for (let i = 0; i < 42; i++) {
-          const d = new Date(start);
-          d.setDate(start.getDate() + i);
-          days.push(d);
-        }
+        for (let i = 0; i < 42; i++) { const d = new Date(start); d.setDate(start.getDate() + i); days.push(d); }
         return { year, month, days };
       }
 
       function renderCalendar() {
-        const notes = loadNotes();
-        const countMap = countNotesByDate(notes);
-
+        const notes = loadNotes(); const countMap = countNotesByDate(notes);
         monthTitle.textContent = formatMonthTitle(viewDate);
         selectedDatePill.textContent = formatHumanDate(selectedISO);
-
-        // keep jump inputs in sync
         if (jumpYear) jumpYear.value = String(viewDate.getFullYear());
         if (jumpMonth) jumpMonth.value = String(viewDate.getMonth());
-
         const { month, days } = getMonthMatrix(viewDate);
         calendarGrid.innerHTML = "";
-
         for (const d of days) {
-          const iso = toISODate(d);
-          const isCurrentMonth = d.getMonth() === month;
-          const isSelected = iso === selectedISO;
-
+          const iso = toISODate(d); const isCurrentMonth = d.getMonth() === month; const isSelected = iso === selectedISO;
           const btn = document.createElement("button");
           btn.type = "button";
           btn.className = "day" + (isCurrentMonth ? "" : " muted") + (isSelected ? " selected" : "");
           btn.setAttribute("role", "gridcell");
-          btn.setAttribute(
-            "aria-label",
-            `${formatHumanDate(iso)}${countMap.get(iso) ? `, ${countMap.get(iso)} notes` : ""}`
-          );
+          btn.setAttribute("aria-label", `${formatHumanDate(iso)}${countMap.get(iso) ? `, ${countMap.get(iso)} notes` : ""}`);
           btn.dataset.iso = iso;
-
-          const num = document.createElement("div");
-          num.className = "num";
-          num.textContent = d.getDate();
-          btn.appendChild(num);
-
+          const num = document.createElement("div"); num.className = "num"; num.textContent = d.getDate(); btn.appendChild(num);
           const count = countMap.get(iso) || 0;
-          if (count > 0) {
-            const badge = document.createElement("div");
-            badge.className = "badge";
-            badge.textContent = String(count);
-            btn.appendChild(badge);
-          }
-
+          if (count > 0) { const badge = document.createElement("div"); badge.className = "badge"; badge.textContent = String(count); btn.appendChild(badge); }
           btn.addEventListener("click", () => selectDate(iso));
           calendarGrid.appendChild(btn);
         }
       }
 
-      function selectDate(iso) {
-        selectedISO = iso;
-        dateInput.value = iso;
-        selectedDatePill.textContent = formatHumanDate(selectedISO);
-        resetEditor();
-        renderCalendar();
-        renderNotesList();
-      }
+      function selectDate(iso) { selectedISO = iso; dateInput.value = iso; selectedDatePill.textContent = formatHumanDate(selectedISO); resetEditor(); renderCalendar(); renderNotesList(); }
 
-      // --- Notes list + filters ---
       function getFilteredNotes() {
-        const notes = loadNotes();
-        const a = filterAnimal.value;
-        const d = filterDate.value;
-        const q = searchInput.value.trim().toLowerCase();
-
+        const notes = loadNotes(); const a = filterAnimal.value; const d = filterDate.value; const q = searchInput.value.trim().toLowerCase();
         return notes.filter(n => {
           if (a !== "ALL" && n.animal !== a) return false;
           if (d === "SELECTED" && n.dateISO !== selectedISO) return false;
-          if (q) {
-            const hay = `${n.animal} ${n.dateISO} ${n.text}`.toLowerCase();
-            if (!hay.includes(q)) return false;
-          }
+          if (q) { const hay = `${n.animal} ${n.dateISO} ${n.text}`.toLowerCase(); if (!hay.includes(q)) return false; }
           return true;
         });
       }
 
       function renderNotesList() {
         const notes = getFilteredNotes();
-
         commentCountPill.textContent = `${notes.length} note${notes.length === 1 ? "" : "s"}`;
         commentList.innerHTML = "";
         emptyState.style.display = notes.length ? "none" : "block";
-
         for (const n of notes) {
-          const item = document.createElement("div");
-          item.className = "comment-item";
-
+          const item = document.createElement("div"); item.className = "comment-item";
           item.innerHTML = `
             <div class="comment-top">
               <p class="comment-title">${escapeHTML(n.animal)} • ${escapeHTML(n.dateISO)}</p>
-              <span class="comment-time">
-                ${escapeHTML(formatTime(n.updatedAt || n.createdAt))}${n.updatedAt ? " (edited)" : ""}
-              </span>
+              <span class="comment-time">${escapeHTML(formatTime(n.updatedAt || n.createdAt))}${n.updatedAt ? " (edited)" : ""}</span>
             </div>
             <div class="comment-text">${escapeHTML(n.text)}</div>
             <div class="comment-controls">
               <button class="mini" type="button" data-action="edit" data-id="${escapeHTML(n.id)}">Edit</button>
               <button class="mini danger" type="button" data-action="delete" data-id="${escapeHTML(n.id)}">Delete</button>
-            </div>
-          `;
-
+            </div>`;
           item.querySelector('[data-action="edit"]').addEventListener("click", () => startEdit(n.id));
           item.querySelector('[data-action="delete"]').addEventListener("click", () => confirmDelete(n.id));
-
           commentList.appendChild(item);
         }
-
-        // Keep calendar badges in sync
         renderCalendar();
       }
 
-      // --- Editor ---
-      function resetEditor() {
-        editingNoteId = null;
-        dateInput.value = selectedISO;
-        noteText.value = "";
-        deleteBtn.style.display = "none";
-        editMeta.textContent = "";
-        draftStatus.textContent = "";
-        saveBtn.textContent = "Save Note";
-      }
+      function resetEditor() { editingNoteId = null; dateInput.value = selectedISO; noteText.value = ""; deleteBtn.style.display = "none"; editMeta.textContent = ""; draftStatus.textContent = ""; saveBtn.textContent = "Save Note"; }
 
       function startEdit(id) {
-        const notes = loadNotes();
-        const found = notes.find(n => n.id === id);
-        if (!found) return;
-
-        editingNoteId = id;
-        animalSelect.value = found.animal;
-        dateInput.value = found.dateISO;
-        noteText.value = found.text;
-
+        const notes = loadNotes(); const found = notes.find(n => n.id === id); if (!found) return;
+        editingNoteId = id; animalSelect.value = found.animal; dateInput.value = found.dateISO; noteText.value = found.text;
         if (found.dateISO !== selectedISO) selectedISO = found.dateISO;
-
-        deleteBtn.style.display = "inline-flex";
-        deleteBtn.dataset.id = id;
-        editMeta.textContent = `Editing: ${found.animal} on ${found.dateISO}`;
-        saveBtn.textContent = "Update Note";
+        deleteBtn.style.display = "inline-flex"; deleteBtn.dataset.id = id;
+        editMeta.textContent = `Editing: ${found.animal} on ${found.dateISO}`; saveBtn.textContent = "Update Note";
         draftStatus.textContent = "Edit mode: update and save, or delete if needed.";
-
         viewDate = new Date(fromISODate(found.dateISO).getFullYear(), fromISODate(found.dateISO).getMonth(), 1);
-        renderCalendar();
-        renderNotesList();
-
-        noteText.focus({ preventScroll: false });
+        renderCalendar(); renderNotesList(); noteText.focus({ preventScroll: false });
       }
 
       function confirmDelete(id) {
-        const notes = loadNotes();
-        const found = notes.find(n => n.id === id);
-        if (!found) return;
-
-        const ok = confirm(
-          `Delete this note?\n\n${found.animal} • ${found.dateISO}\n\n"${found.text.slice(0, 80)}${found.text.length > 80 ? "…" : ""}"`
-        );
+        const notes = loadNotes(); const found = notes.find(n => n.id === id); if (!found) return;
+        const ok = confirm(`Delete this note?\n\n${found.animal} • ${found.dateISO}\n\n"${found.text.slice(0, 80)}${found.text.length > 80 ? "…" : ""}"`);
         if (!ok) return;
-
-        deleteNoteById(id);
-        if (editingNoteId === id) resetEditor();
-        renderNotesList();
+        deleteNoteById(id); if (editingNoteId === id) resetEditor(); renderNotesList();
       }
 
       noteForm.addEventListener("submit", (e) => {
         e.preventDefault();
-
-        const animal = animalSelect.value;
-        const dateISO = dateInput.value || selectedISO;
-        const text = noteText.value.trim();
-
-        if (!animal || !dateISO || !text) {
-          draftStatus.textContent = "Please fill out animal, date, and comment.";
-          return;
-        }
-
+        const animal = animalSelect.value; const dateISO = dateInput.value || selectedISO; const text = noteText.value.trim();
+        if (!animal || !dateISO || !text) { draftStatus.textContent = "Please fill out animal, date, and comment."; return; }
         const now = Date.now();
-
         if (editingNoteId) {
-          const notes = loadNotes();
-          const existing = notes.find(n => n.id === editingNoteId);
-          if (existing) {
-            upsertNote({ ...existing, animal, dateISO, text, updatedAt: now });
-            draftStatus.textContent = "Updated ✔";
-            selectedISO = dateISO;
-            viewDate = new Date(fromISODate(dateISO).getFullYear(), fromISODate(dateISO).getMonth(), 1);
-            renderNotesList();
-            return;
-          } else {
-            editingNoteId = null;
-          }
+          const notes = loadNotes(); const existing = notes.find(n => n.id === editingNoteId);
+          if (existing) { upsertNote({ ...existing, animal, dateISO, text, updatedAt: now }); draftStatus.textContent = "Updated ✔"; selectedISO = dateISO; viewDate = new Date(fromISODate(dateISO).getFullYear(), fromISODate(dateISO).getMonth(), 1); renderNotesList(); return; }
+          else { editingNoteId = null; }
         }
-
-        upsertNote({
-          id: uid(),
-          animal,
-          dateISO,
-          text,
-          createdAt: now,
-          updatedAt: null
-        });
-
-        draftStatus.textContent = "Saved ✔";
-        selectedISO = dateISO;
-        viewDate = new Date(fromISODate(dateISO).getFullYear(), fromISODate(dateISO).getMonth(), 1);
-        resetEditor();
-        renderNotesList();
+        upsertNote({ id: uid(), animal, dateISO, text, createdAt: now, updatedAt: null });
+        draftStatus.textContent = "Saved ✔"; selectedISO = dateISO; viewDate = new Date(fromISODate(dateISO).getFullYear(), fromISODate(dateISO).getMonth(), 1); resetEditor(); renderNotesList();
       });
 
-      clearBtn.addEventListener("click", () => {
-        resetEditor();
-        noteText.focus();
-      });
+      clearBtn.addEventListener("click", () => { resetEditor(); noteText.focus(); });
+      deleteBtn.addEventListener("click", () => { const id = deleteBtn.dataset.id; if (!id) return; confirmDelete(id); });
+      prevMonthBtn.addEventListener("click", () => { viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1); renderCalendar(); });
+      nextMonthBtn.addEventListener("click", () => { viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1); renderCalendar(); });
+      todayBtn.addEventListener("click", () => { const today = new Date(); viewDate = new Date(today.getFullYear(), today.getMonth(), 1); selectDate(toISODate(today)); });
 
-      deleteBtn.addEventListener("click", () => {
-        const id = deleteBtn.dataset.id;
-        if (!id) return;
-        confirmDelete(id);
-      });
-
-      // --- Calendar navigation ---
-      prevMonthBtn.addEventListener("click", () => {
-        viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1);
-        renderCalendar();
-      });
-
-      nextMonthBtn.addEventListener("click", () => {
-        viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1);
-        renderCalendar();
-      });
-
-      todayBtn.addEventListener("click", () => {
-        const today = new Date();
-        viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
-        selectDate(toISODate(today));
-      });
-
-      // Jump to year/month (future-friendly)
       if (jumpGo) {
         jumpGo.addEventListener("click", () => {
-          const y = Number(jumpYear.value);
-          const m = Number(jumpMonth.value);
+          const y = Number(jumpYear.value); const m = Number(jumpMonth.value);
           if (!Number.isFinite(y) || y < 2026 || !Number.isFinite(m) || m < 0 || m > 11) return;
-          viewDate = new Date(y, m, 1);
-          // keep selected date inside that month (default to 1st)
-          selectDate(toISODate(new Date(y, m, 1)));
+          viewDate = new Date(y, m, 1); selectDate(toISODate(new Date(y, m, 1)));
         });
       }
 
-      // --- Filters/search ---
-      function wireRerender(el) {
-        el.addEventListener("input", renderNotesList);
-        el.addEventListener("change", renderNotesList);
-      }
+      function wireRerender(el) { el.addEventListener("input", renderNotesList); el.addEventListener("change", renderNotesList); }
       [filterAnimal, filterDate, searchInput].forEach(wireRerender);
 
-      // --- Smooth scrolling for nav + hero button ---
-      function smoothScrollTo(hash) {
-        const target = document.querySelector(hash);
-        if (!target) return;
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+      function smoothScrollTo(hash) { const target = document.querySelector(hash); if (!target) return; target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+      document.querySelectorAll('nav a[href^="#"]').forEach(a => { a.addEventListener("click", (e) => { e.preventDefault(); const href = a.getAttribute("href"); history.pushState(null, "", href); smoothScrollTo(href); }); });
+      document.querySelectorAll('[data-scroll]').forEach(btn => { btn.addEventListener("click", () => { const hash = btn.getAttribute("data-scroll"); history.pushState(null, "", hash); smoothScrollTo(hash); }); });
 
-      document.querySelectorAll('nav a[href^="#"]').forEach(a => {
-        a.addEventListener("click", (e) => {
-          e.preventDefault();
-          const href = a.getAttribute("href");
-          history.pushState(null, "", href);
-          smoothScrollTo(href);
-        });
-      });
-
-      document.querySelectorAll('[data-scroll]').forEach(btn => {
-        btn.addEventListener("click", () => {
-          const hash = btn.getAttribute("data-scroll");
-          history.pushState(null, "", hash);
-          smoothScrollTo(hash);
-        });
-      });
-
-      // --- Init ---
-      (function init() {
-        dateInput.value = selectedISO;
-        renderCalendar();
-        resetEditor();
-        renderNotesList();
-      })();
+      (function init() { dateInput.value = selectedISO; renderCalendar(); resetEditor(); renderNotesList(); })();
     })();
   </script>
 
 </body>
 </html>
+
 
 
